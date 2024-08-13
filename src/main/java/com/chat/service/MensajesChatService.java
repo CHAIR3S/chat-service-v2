@@ -64,29 +64,35 @@ public class MensajesChatService implements IMensajesChatService {
 
 	@Override
 	public List<MensajeDTO> getMessagesByChatId(Integer idChat) {
+
+		List<MensajeDTO> mensajeDTOList = new ArrayList<>();
 		
 		Optional<chatviaje> chatOptional = chatRepository.findById(idChat);
+		
 		
 		if(chatOptional.isEmpty()) {
 			log.error("Error: Chat no encontrado");
 			return new ArrayList<>();
 		}
 		
-		List<mensajeschat> mensajesList = mensajeRepository.findByChat(chatOptional.get());
+
+		if(chatOptional.get().getStatus() == 1) {
 		
-		List<MensajeDTO> mensajeDTOList = new ArrayList<>();
-		
-		mensajesList.forEach(mensaje -> {
+			List<mensajeschat> mensajesList = mensajeRepository.findByChat(chatOptional.get());
 			
-	        MensajeDTO nuevoMensaje = new MensajeDTO();
-	        nuevoMensaje.setIdMensaje(mensaje.getIdMensaje());
-	        nuevoMensaje.setChatId(mensaje.getChat().getIdChat());
-	        nuevoMensaje.setEmisorId(mensaje.getEmisor().getIdUsuario());
-	        nuevoMensaje.setMensaje(mensaje.getMensaje());
-	        nuevoMensaje.setFechaHora(mensaje.getFechaHora().toString());
 			
-			mensajeDTOList.add(nuevoMensaje);
-		});
+			mensajesList.forEach(mensaje -> {
+				
+		        MensajeDTO nuevoMensaje = new MensajeDTO();
+		        nuevoMensaje.setIdMensaje(mensaje.getIdMensaje());
+		        nuevoMensaje.setChatId(mensaje.getChat().getIdChat());
+		        nuevoMensaje.setEmisorId(mensaje.getEmisor().getIdUsuario());
+		        nuevoMensaje.setMensaje(mensaje.getMensaje());
+		        nuevoMensaje.setFechaHora(mensaje.getFechaHora().toString());
+				
+				mensajeDTOList.add(nuevoMensaje);
+			});
+		}
 		
 		return mensajeDTOList;
 	}

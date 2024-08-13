@@ -36,6 +36,7 @@ public class ChatSocketController {
     public void processChatRequest(Integer idChat) {
     	log.info("obtener mensajes por id chat: {} " + idChat);
 
+    	
         scheduler.scheduleAtFixedRate(() -> {
         	log.info("actualizando chat: " + idChat);
             List<MensajeDTO> messages = mensajeService.getMessagesByChatId(idChat);

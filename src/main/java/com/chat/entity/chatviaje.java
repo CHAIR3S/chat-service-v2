@@ -20,6 +20,9 @@ public class chatviaje {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "idChat")
 	private Integer idChat;
+	
+	@Column(name= "status")
+	private Integer status;
 
 	@ManyToOne
 	@JoinColumn(name = "idViaje", nullable = false)

@@ -15,5 +15,7 @@ public interface IChatRepository  extends JpaRepository<chatviaje, Integer>{
 	
 
     List<chatviaje> findByViaje_ConductorOrViaje_Cliente(usuario conductor, usuario cliente);
+    
+    
 
 }
